@@ -1,0 +1,62 @@
+
+/*===================================================
+ * Global
+===================================================*/
+*{
+    font-family: monospace, monospace;
+    color: rgb(255,255,255);
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    border: 0px transparent;
+}
+
+/*===================================================
+ * Generic
+===================================================*/
+#G1{
+    /* background-color: transparent; */
+    background-color: rgba(20,20,20,150);
+    /* border: 1px solid red; */
+    font-size: 42px;
+    font-weight: bold; 
+    color:rgb(255, 255, 255);
+    qproperty-alignment: AlignCenter;
+}
+#G2{
+    background-color: transparent;
+    /* border: 2px solid red; */
+    font-size: 26px;
+    font-weight: bold; 
+    color:rgb(255, 255, 255);
+    qproperty-alignment: AlignCenter;
+}
+#G3{
+    background-color: transparent;
+    /* border: 2px solid red; */
+    font-size: 20px;
+    font-weight: bold; 
+    color:rgb(255, 255, 255);
+    qproperty-alignment: AlignCenter;
+}
+
+#footer_bg{
+    background-color: rgba(20,20,20,0);
+}
+#footer_btn_txt {
+    border: 1px solid rgb(0,0,0);
+    color: rgb(0,0,0);
+    font-size: 30px;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+/* for testing */
+/* *{background-color:transparent;border:1px solid red;} */

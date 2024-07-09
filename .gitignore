@@ -1,0 +1,11 @@
+*__pycache__*
+
+assets/log*
+test/*
+*/backup/*
+assets/fonts*
+
+
+
+
+

@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.windows": {
+        // "PYTHONPATH": "${env:PYTHONPATH};C:\\Users\\william.cowles\\Desktop\\repos\\mini\\scuba;C:\\Users\\william.cowles\\Desktop\\repos\\mini\\scuba"
+        "PYTHONPATH": "${env:PYTHONPATH};C:\\Users\\william.cowles\\Desktop\\repos\\mini\\scuba"
+    }
+}

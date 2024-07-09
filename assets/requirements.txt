@@ -1,0 +1,19 @@
+# Python 3.9.2
+
+
+
+pip install pyqt5 Pillow opencv-python requests
+
+
+
+
+
+
+
+
+
+
+
+
+
+
