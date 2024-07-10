@@ -18,6 +18,8 @@ class GlobalSignals(QObject):
     set_soft_keys = pyqtSignal(int)
     soft_key_pressed = pyqtSignal(str)
 
+    haptic_feedback = pyqtSignal(int)
+
     def __new__(cls, *args, **kw):
         if not hasattr(cls, '_instance'):
             orig = super(GlobalSignals, cls)

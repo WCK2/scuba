@@ -8,7 +8,11 @@ from gui.pages.battery import BATTERY
 from gui.pages.alarms import ALARMS
 from gui.pages.maintenance import MAINTENANCE
 from gui.pages.setup import SETUP
+import os
+if os.name == 'nt': import utils.mock_gpio as GPIO
+else: import RPi.GPIO as GPIO
 import atexit
+
 
 class SCUBA_GUI(NStackedWidget):
     def __init__(self, *args, **kwargs):
@@ -43,6 +47,12 @@ class SCUBA_GUI(NStackedWidget):
         gsig.goto_page.connect(lambda s: self.__gotopage(s))
         gsig.soft_key_pressed.connect(self.__handle_soft_key_press)
 
+        gsig.haptic_feedback.connect(self.__haptic_feedback)
+
+        #~ timers
+        self.haptic_feedback_timer = NTimer(500, lambda: self.__haptic_feedback(0), False)
+
+
     def __handle_soft_key_press(self, key_id):
         if key_id == 'sk1': self.__previous_page()
         elif key_id == 'sk2': self.__next_page()
@@ -75,6 +85,18 @@ class SCUBA_GUI(NStackedWidget):
     def reset(self):
         self.setCurrentWidget(self.page_home)
 
+    def __haptic_feedback(self, b):
+        if b:
+            if self.haptic_feedback_timer.isRunning():
+                self.haptic_feedback_timer.reset()
+            else:
+                self.haptic_feedback_timer.start()
+            GPIO.output(settings.buzzer_pin, GPIO.HIGH)
+        else:
+            if self.haptic_feedback_timer.isRunning:
+                self.haptic_feedback_timer.stop()
+            GPIO.output(settings.buzzer_pin, GPIO.LOW)
+
     def setCurrentIndex(self, index: int) -> None:
         return super().setCurrentIndex(index)
         
@@ -98,6 +120,8 @@ if __name__ == "__main__":
     
     app = SCUBA_GUI()
     app.setFixedSize(QSize(800,480))
+    atexit.register(lambda: app.__haptic_feedback(0))
+
     if os.name == 'nt':
         app.resize(int(SCREEN_WIDTH), int(SCREEN_HEIGHT))
         app.show()
