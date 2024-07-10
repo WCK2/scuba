@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QThread
 from gui.qt.common import gsig
 from utils.config import settings
-import time
+from gui.workers.ntimer import NTimer
 import os
 
 if os.name == 'nt':
@@ -17,24 +17,25 @@ class GPIOThread(QThread):
         gsig.enable_soft_key.connect(self.enable_soft_key)
         gsig.disable_soft_key.connect(self.disable_soft_key)
         gsig.set_soft_keys.connect(self.set_soft_keys)
+        self.buzzer_timer = NTimer(500, lambda: self.haptic_feedback(0), False)
 
     def run(self):
         GPIO.setmode(GPIO.BCM)
         
         # Setup input and output pins
         for key in settings.soft_keys.values():
-            GPIO.setup(key['input_pin'], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.setup(key['input_pin'], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
             GPIO.setup(key['led_pin'], GPIO.OUT)
-        
+        GPIO.setup(settings.buzzer_pin, GPIO.OUT)
+
         while self._running:
             for key_id, key in settings.soft_keys.items():
                 if GPIO.input(key['input_pin']) == GPIO.HIGH and key['enabled']:
-                    print(f'gsig.soft_key_pressed.emit({key_id})')
+                    # print(f'gsig.soft_key_pressed.emit({key_id})')
                     gsig.soft_key_pressed.emit(key_id)
-                    # time.sleep(0.3)
+                    self.haptic_feedback(1)
                     QThread.msleep(300)
 
-            # time.sleep(0.1)
             QThread.msleep(100)
 
     def stop(self):
@@ -53,13 +54,22 @@ class GPIOThread(QThread):
     def set_soft_keys(self, b: int):
         b &= 0b1111
         for i, (key_id, key) in enumerate(settings.soft_keys.items()):
-            # key['enabled'] = b >> (3 - i) & 0b1
             if b >> (3 - i) & 0b1:
-                print(f'enable soft key: {key_id}')
                 self.enable_soft_key(key_id)
             else:
-                print(f'disable soft key: {key_id}')
                 self.disable_soft_key(key_id)
 
+    def haptic_feedback(self, b):
+        print(f'haptic_feedback({b})')
+        if b:
+            print(f'self.buzzer_timer.isRunning(): {self.buzzer_timer.isRunning()}')
+            if self.buzzer_timer.isRunning():
+                self.buzzer_timer.reset()
+            else:
+                self.buzzer_timer.start()
+            # GPIO.output(settings.buzzer_pin, GPIO.HIGH)
+        else:
+            print(f'turning buzzer OFF')
+            GPIO.output(settings.buzzer_pin, GPIO.LOW)
 
 
