@@ -38,15 +38,14 @@ class SCUBA_GUI(NStackedWidget):
         self.page_setup             : SETUP = self.addWidget(SETUP())
 
         #~ signals
-        gsig.previous_page.connect(self.previous_page)
-        gsig.next_page.connect(self.next_page)
+        gsig.previous_page.connect(self.__previous_page)
+        gsig.next_page.connect(self.__next_page)
         gsig.goto_page.connect(lambda s: self.__gotopage(s))
-        gsig.soft_key_pressed.connect(self.handle_soft_key_press)
+        gsig.soft_key_pressed.connect(self.__handle_soft_key_press)
 
-
-    def handle_soft_key_press(self, key_id):
-        if key_id == 'sk1': self.previous_page()
-        elif key_id == 'sk2': self.next_page()
+    def __handle_soft_key_press(self, key_id):
+        if key_id == 'sk1': self.__previous_page()
+        elif key_id == 'sk2': self.__next_page()
         else: pass
 
     def __gotopage(self,name:str):
@@ -67,10 +66,10 @@ class SCUBA_GUI(NStackedWidget):
         elif name == 'setup':
             self.setCurrentWidget(self.page_setup)
 
-    def previous_page(self):
+    def __previous_page(self):
         self.setCurrentIndex(self.currentIndex()-1)
 
-    def next_page(self):
+    def __next_page(self):
         self.setCurrentIndex(self.currentIndex()+1)
 
     def reset(self):

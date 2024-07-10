@@ -16,7 +16,7 @@ class INTRO(NFrame):
         logo.setFixedSize(pixmap.size())
 
         self.footer = FOOTER(self, active=0b0101)
-        self.footer.btns['ok'].clicked.connect(lambda: gsig.next_page.emit())
+        self.footer.btns['ok'].clicked.connect(gsig.next_page.emit)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -25,9 +25,16 @@ class INTRO(NFrame):
         layout.addStretch()
         layout.addWidget(self.footer)
 
+        gsig.soft_key_pressed.connect(self.__handle_soft_key_press)
+
+
+    def __handle_soft_key_press(self, key_id):
+        if key_id == 'sk4': gsig.next_page.emit()
+        else: pass
 
     #~ PyQt Events
     def showEvent(self, a0):
+        gsig.set_soft_keys.emit(0b0101)
         return super().enterEvent(a0)
 
     def enterEvent(self, a0):

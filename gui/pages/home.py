@@ -26,16 +26,13 @@ class HOME(NFrame):
 
     #~ PyQt Events
     def showEvent(self, a0):
-        print('show')
         gsig.set_soft_keys.emit(0b1100)
         return super().enterEvent(a0)
 
     def enterEvent(self, a0):
-        print('enter')
         return super().enterEvent(a0)
 
     def hideEvent(self, a0) -> None:
-        print(f'hide')
         gsig.set_soft_keys.emit(0b0000)
         return super().hideEvent(a0)
 

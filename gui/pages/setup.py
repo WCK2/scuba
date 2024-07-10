@@ -25,6 +25,7 @@ class SETUP(NFrame):
 
     #~ PyQt Events
     def showEvent(self, a0):
+        gsig.set_soft_keys.emit(0b1000)
         return super().enterEvent(a0)
 
     def enterEvent(self, a0):

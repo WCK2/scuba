@@ -4,6 +4,7 @@ import time
 BCM = 'BCM'
 IN = 'IN'
 OUT = 'OUT'
+PUD_DOWN = 'PUD_DOWN'
 PUD_UP = 'PUD_UP'
 LOW = False
 HIGH = True
@@ -18,14 +19,14 @@ class MockGPIO:
 
     def setup(self, pin, mode, pull_up_down=None):
         self.pins[pin] = {'mode': mode, 'state': LOW}
-        print(f'Pin {pin} set to mode {mode} with pull {pull_up_down}')
+        # print(f'Pin {pin} set to mode {mode} with pull {pull_up_down}')
 
     def input(self, pin):
         return self.pins[pin]['state']
 
     def output(self, pin, state):
         self.pins[pin]['state'] = state
-        print(f'Pin {pin} set to {state}')
+        # print(f'Pin {pin} set to {state}')
 
     def cleanup(self):
         print('GPIO cleanup')

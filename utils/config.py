@@ -10,7 +10,7 @@ class VPath:
         self.assets = os.getcwd() + '/assets/'
         self.images = os.getcwd() + '/assets/images/'
 
-vp=VPath()
+vp = VPath()
 
 
 class SETTINGS:
@@ -27,11 +27,12 @@ class SETTINGS:
 
         #? io
         self.soft_keys = {
-            'sk1': {'input_pin': 17, 'led_pin': 27, 'enabled': False},
-            'sk2': {'input_pin': 22, 'led_pin': 10, 'enabled': False},
-            'sk3': {'input_pin': 9, 'led_pin': 11, 'enabled': False},
-            'sk4': {'input_pin': 0, 'led_pin': 5, 'enabled': False},
+            'sk1': {'input_pin': 26, 'led_pin': 22, 'enabled': False},
+            'sk2': {'input_pin': 16, 'led_pin': 23, 'enabled': False},
+            'sk3': {'input_pin': 6, 'led_pin': 24, 'enabled': False},
+            'sk4': {'input_pin': 5, 'led_pin': 25, 'enabled': False},
         }
+        self.buzzer_pin = 4
 
     def reset(self):
         pass
