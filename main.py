@@ -50,7 +50,7 @@ class SCUBA_GUI(NStackedWidget):
         gsig.haptic_feedback.connect(self.__haptic_feedback)
 
         #~ timers
-        self.haptic_feedback_timer = NTimer(500, lambda: self.__haptic_feedback(0), False)
+        self.haptic_feedback_timer = NTimer(50, lambda: self.__haptic_feedback(0), False)
 
 
     def __handle_soft_key_press(self, key_id):

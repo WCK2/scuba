@@ -21,13 +21,15 @@ class GPIOThread(QThread):
             GPIO.setup(key['input_pin'], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
             GPIO.setup(key['led_pin'], GPIO.OUT)
         GPIO.setup(settings.buzzer_pin, GPIO.OUT)
+        
+        GPIO.output(settings.buzzer_pin, GPIO.LOW)
 
         while self._running:
             for key_id, key in settings.soft_keys.items():
                 if GPIO.input(key['input_pin']) == GPIO.HIGH and key['enabled']:
                     # print(f'gsig.soft_key_pressed.emit({key_id})')
-                    gsig.soft_key_pressed.emit(key_id)
                     gsig.haptic_feedback.emit(1)
+                    gsig.soft_key_pressed.emit(key_id)
                     QThread.msleep(300)
 
             QThread.msleep(100)
